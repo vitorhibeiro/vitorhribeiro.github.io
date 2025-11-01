@@ -1,13 +1,12 @@
 ---
-title: "Education"
+title: "🎓 Education"
 description: "Educational info"
+hidemeta: true
 ---
 
-## 🎓 Education
-
 ---
 
-### [Degree or Program Title]
+### PhD
 
 + **Institution:** Maringá State University (UEM)
 + **Period:** 2024 – 2028 
