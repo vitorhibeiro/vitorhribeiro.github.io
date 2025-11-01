@@ -17,13 +17,7 @@ menu:
           weight: 2
         - name: Education
           url: education/
-          weight: 4 
-        - name: Courses
-          url: courses/
           weight: 3
-        - name: Data
-          url: data/
-          weight: 4 
 
 params:
     description: "This website hosts Vítor's research papers, books, course materials, data, curriculum vitae, and contact information."
@@ -61,8 +55,6 @@ params:
               url: papers/
             - name: Education
               url: education/
-            - name: Data
-              url: data/
             - name: Tags
               url: tags/
             - name: Archive
