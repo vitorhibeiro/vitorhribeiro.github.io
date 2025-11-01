@@ -4,8 +4,6 @@ description: "Educational info"
 hidemeta: true
 ---
 
----
-
 ### PhD
 
 + **Institution:** Maringá State University (UEM)
