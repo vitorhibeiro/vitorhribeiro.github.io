@@ -12,6 +12,8 @@ taxonomies:
 
 menu:
     main:
+        - name: Home
+          url: /
         - name: Publications
           url: papers/
           weight: 2
