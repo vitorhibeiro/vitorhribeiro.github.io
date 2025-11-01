@@ -7,29 +7,29 @@ description: "Education"
 
 ##### [Degree or Program Title]
 
-Institution: [University or Institution Name]
-Period: [Start Year – End Year]
-Location: [City, Country]
+Institution: Maringá State University (UEM)
+Period: 2024 – 2028 
+Location: Maringá, Brazil
 
 [Brief description of your studies, focus areas, main achievements, or research topics. You can also include notable courses, thesis titles, or advisors if relevant.]
 
 ---
 
-##### [Degree or Program Title]
+##### Master in Applyed Physics
 
-Institution: [University or Institution Name]
-Period: [Start Year – End Year]
-Location: [City, Country]
+Institution: Campinas State University (UNICAMP)
+Period: 2021 – 2023
+Location: Campinas, Brazil
 
 [Brief description of your studies, focus areas, main achievements, or research topics. You can also include notable courses, thesis titles, or advisors if relevant.]
 
 ---
 
-##### [Degree or Program Title]
+##### Graduation on Physics
 
-Institution: [University or Institution Name]
-Period: [Start Year – End Year]
-Location: [City, Country]
+Institution: Maringá State University (UEM)
+Period: 2017 – 2021
+Location: Maringá, Brazil
 
 [Brief description of your studies, focus areas, main achievements, or research topics. You can also include notable courses, thesis titles, or advisors if relevant.]
 
