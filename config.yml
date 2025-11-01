@@ -1,4 +1,4 @@
-baseURL: "https://pascalmichaillat.org/hugo-website/" 
+baseURL: "https://vitorhibeiro.github.io/vitorhribeiro.github.io/" 
 title: Vítor Hugo Ribeiro
 theme: PaperMod
 
@@ -12,10 +12,7 @@ taxonomies:
 
 menu:
     main:
-        - name: Books
-          url: books/
-          weight: 5 
-        - name: Papers
+        - name: Publications
           url: papers/
           weight: 2
         - name: Courses
@@ -41,7 +38,7 @@ params:
     ShowBreadCrumbs: false
     ShowCodeCopyButtons: true
     ShowAllPagesInArchive: false
-    MainSections: ["books","courses","papers","data"]
+    MainSections: ["papers","data"]
     ShowToc: false
     disableScrollToTop: true
     TocOpen: true
@@ -61,10 +58,6 @@ params:
               url: papers/
             - name: Data
               url: data/
-            - name: Books
-              url: books/
-            - name: Courses
-              url: courses/
             - name: Tags
               url: tags/
             - name: Archive
@@ -73,18 +66,18 @@ params:
     socialIcons:
     #    - name: CV
     #      url: cv.pdf
-    #    - name: Email
-    #      url: mailto:igelfeld@regensburg.edu
+        - name: Email
+          url: mailto:igelfeld@regensburg.edu
     #    - name: Zoom
     #      url: https://www.zoom.us/my/igelfeld
     #    - name: Location
     #      url: location/
     #    - name: Office Hours
     #      url: officehours/
-    #    - name: Google Scholar
-    #      url: https://scholar.google.com/citations?user=cL23w-4AAAAJ
-    #    - name: GitHub
-    #      url: https://github.com/pmichaillat
+        - name: Google Scholar
+          url: https://scholar.google.com/citations?user=cL23w-4AAAAJ
+        - name: GitHub
+          url: https://github.com/pmichaillat
     #    - name: Substack
     #      url: https://pmichaillat.substack.com
     #    - name: YouTube
@@ -100,7 +93,7 @@ params:
         hiddenInList: false
         hiddenInSingle: true
     label:
-      text: "Moritz-Maria von Igelfeld"
+      text: "Vítor Hugo Ribeiro"
       icon: favicon.ico
       iconHeight: 18
 
