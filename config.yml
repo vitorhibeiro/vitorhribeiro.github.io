@@ -15,7 +15,7 @@ menu:
         - name: Publications
           url: papers/
           weight: 2
-        - name: Educatiin
+        - name: Education
           url: education/
           weight: 4 
         - name: Courses
