@@ -1,61 +1,50 @@
 ---
-title: "Unusual Uses For Olive Oil" 
-date: 2013-01-15
-tags: ["philology","oleic science","history of oil","Mediterranean world"]
-author: ["Detlev Amadeus Unterholzer","Moritz-Maria von Igelfeld"]
+title: "Λ polarization from vortex rings as the medium response for jet thermalization" 
+date: 2023-01-17
+#tags: ["philology","oleic science","history of oil","Mediterranean world"]
+author: ["Vítor Hugo Ribeiro", "David Dobrigkeit Chinellato", "Michael Annan Lisa", "Willian Matioli Serenone", "Chun Shen", "Jun Takahashi", "Giorgio Torrieri"]
 description: "This paper reviews unusual uses for olive oil throughout the Mediterranean world. Published in the Journal of Oleic Science, 2013." 
 summary: "This paper reviews unusual uses for olive oil throughout the Mediterranean world. It highlights in particular the challengs arising from excessive or unorthodox consumption of olive oil." 
 cover:
     image: "paper1.png"
-    alt: "Some Uses For Olive Oil"
+    #alt: "Some Uses For Olive Oil"
     relative: true
 editPost:
-    URL: "https://github.com/pmichaillat/hugo-website"
-    Text: "Journal of Oleic Science"
+    URL: "https://journals.aps.org/prc/abstract/10.1103/PhysRevC.109.014905"
+    Text: "Physical Review C"
 
 ---
 
----
 
-##### Download
+<!-- ##### Download
 
 + [Paper](paper1.pdf)
 + [Online appendix](appendix1.pdf)
-+ [Code and data](https://github.com/pmichaillat/feru)
++ [Code and data](https://github.com/pmichaillat/feru) -->
 
 ---
 
 ##### Abstract
 
-This paper reviews unusual uses for olive oil throughout the Mediterranean world. It highlights in particular the challengs arising from excessive or unorthodox consumption of olive oil. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
----
-
-##### Figure 6: Some Uses For Olive Oil
-
-![](paper1.png)
+We performed a systematic study on the formation of vorticity rings as the process for jet thermalization in the medium created in high-energy nuclear collisions. In this work, we expanded our previous analysis to a more realistic framework by considering noncentral events and fluctuations in the initial condition. We simulate the formation and evolution of the flow vortex structure in a relativistic viscous hydrodynamic model and study the sensitivity of the proposed "ring observabl" (R) that can be measured experimentally through the polarization of Λ hyperons. We show that this observable is robust with respect to fluctuating initial conditions to capture the jet-induced vortex flow signal and further study its dependence on different model parameters, such as the jet's velocity, position, the fluid's shear viscosity, and the collision centrality. The proposed observable is associated with the formation of vorticity in a quark-gluon plasma, showing that the measurement of particle polarization can be a powerful tool to probe different properties of jet-medium interactions and to understand better the polarization induced by the transverse and longitudinal expansions of the medium.
 
 ---
 
 ##### Citation
 
-Unterholzer, Detlev A., and  Moritz-Maria von Igelfeld. 2013. "Unusual Uses For Olive Oil." *Journal of Oleic Science* 34 (1): 449–489. http://www.alexandermccallsmith.com/book/unusual-uses-for-olive-oil.
+Ribeiro, V. H. et al. 2023. "Λ polarization from vortex rings as the medium response for jet thermalization" *Phys. Rev. C* 109, 014905.
 
 ```BibTeX
-@article{UI13,
-author = {Detlev A. Unterholzer and Moritz-Maria von Igelfeld},
-year = {2013},
-title ={Unusual Uses For Olive Oil},
-journal = {Journal of Oleic Science},
-volume = {34},
-number = {1},
-pages = {449--489},
-url = {http://www.alexandermccallsmith.com/book/unusual-uses-for-olive-oil}}
+@article{PhysRevC.109.014905,
+author = {Ribeiro, V. H et al},
+year = {2023},
+title ={Λ polarization from vortex rings as the medium response for jet thermalization},
+journal = {Phys. Rev. C},
+volume = {109},
+issue = {1},
+pages = {014905},
+doi = {10.1103/PhysRevC.109.014905},
+url = {https://link.aps.org/doi/10.1103/PhysRevC.109.014905}
+}
 ```
 
----
-
-##### Related material
-
-+ [Presentation slides](presentation1.pdf)
-+ [Summary of the paper](https://www.penguinrandomhouse.com/books/110403/unusual-uses-for-olive-oil-by-alexander-mccall-smith/)
