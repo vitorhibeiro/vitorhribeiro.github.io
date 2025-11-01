@@ -73,6 +73,8 @@ params:
     #      url: officehours/
         - name: Google Scholar
           url: https://scholar.google.com/citations?user=cL23w-4AAAAJ
+        - name: Linkedin
+          url: https://scholar.google.com/citations?user=cL23w-4AAAAJ
         - name: GitHub
           url: https://github.com/pmichaillat
     #    - name: Substack
