@@ -1,3 +1,8 @@
+---
+title: "Education"
+description: "Educational info"
+---
+
 ## 🎓 Education
 
 ---
