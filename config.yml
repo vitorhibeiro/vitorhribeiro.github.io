@@ -93,7 +93,7 @@ params:
         hiddenInList: false
         hiddenInSingle: true
     label:
-      text: "Vítor Hugo Ribeiro"
+      text: "V. H. Ribeiro"
       icon: favicon.ico
       iconHeight: 18
 
