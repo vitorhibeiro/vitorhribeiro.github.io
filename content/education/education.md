@@ -13,7 +13,6 @@ This paper reviews unusual uses for olive oil throughout the Mediterranean world
 
 ##### Figure 6: Some Uses For Olive Oil
 
-![](paper1.png)
 
 ---
 
