@@ -15,6 +15,9 @@ menu:
         - name: Publications
           url: papers/
           weight: 2
+        - name: Educatiin
+          url: education/
+          weight: 4 
         - name: Courses
           url: courses/
           weight: 3
@@ -56,6 +59,8 @@ params:
           buttons:
             - name: Publications
               url: papers/
+            - name: Education
+              url: education/
             - name: Data
               url: data/
             - name: Tags
