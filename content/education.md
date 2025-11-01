@@ -3,6 +3,8 @@ title: "🎓 Education"
 description: "Educational info"
 ---
 
+---
+
 ### PhD
 
 + **Institution:** Maringá State University (UEM)
