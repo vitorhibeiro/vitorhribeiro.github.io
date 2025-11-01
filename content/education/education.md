@@ -1,9 +1,4 @@
----
-title: "Education"
-description: "Education"
----
-
-### 🎓 Education
+## 🎓 Education
 
 ---
 
