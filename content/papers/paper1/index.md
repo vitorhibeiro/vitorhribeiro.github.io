@@ -15,7 +15,6 @@ editPost:
 
 ---
 
-
 <!-- ##### Download
 
 + [Paper](paper1.pdf)
