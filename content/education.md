@@ -9,6 +9,7 @@ description: "Educational info"
 
 + **Maringá State University (UEM)** | Maringá, Brazil
 + **Period:** 2024 – 2028 (expected)
++ **Advisor:** Haroldo Valentin Ribeiro
 
 My doctoral research is situated within the field of Complex Systems, focusing on the "Science of Science" area. The project involves a large-scale analysis of research metrics and collaboration networks, primarily using data from the Lattes platform—the main curriculum vitae database for the Brazilian** scientific community. In this project, by applying complex network, physics, and statistics theory, we aim to identify key structural patterns related to researchers careers and other features for scientific evaluation. A specific goal is to quantify how collaboration influences scientific productivity and impact across different fields.
 
@@ -19,6 +20,7 @@ My doctoral research is situated within the field of Complex Systems, focusing o
 + **Campinas State University (UNICAMP)** | Campinas, Brazil
 + **Period:** 2021 – 2023
 + **Dissertation:** *Vorticity rings in relativistic heavy ion collisions*
++ **Advisor:** Jun Takahashi
 
 My master's research focused on modeling the thermalization of jets in Quark-Gluon Plasma (QGP) and measuring this process via Lambda particle polarization. I investigated jet thermalization by studying the formation of vorticity rings within a hydrodynamic description of the QGP medium, employing a state-of-the-art computational simulation chain to model the dynamics of hadron collisions. This work involved reproducing experimental conditions and extracting information from particle polarization, applying and strengthening my expertise in relativistic hydrodynamics, data analysis, and large-scale computational simulation.
 
