@@ -52,7 +52,7 @@ params:
     profileMode:
           enabled: true
           title: Vítor Hugo Ribeiro
-          subtitle: "PhD Student | Physics | Complex Systems | Complex Networks | Science of Science"
+          subtitle: "PhD Student | Physics | Complex Systems | Complex Networks | Science of Science" 
           imageUrl: "profile.jpg"
           imageWidth: 160
           imageHeight: 160
@@ -93,6 +93,14 @@ params:
     #      url: https://x.com/pmichaillat
     #    - name: Bluesky
     #      url: https://bsky.app/profile/pmichaillat.bsky.social
+
+---
+
+    💻 I am a researcher-in-training with a passion for Science and Technology.
+
+    I am currently a PhD student at the Physics Department of Maringá State University (UEM) and a member of the ComplexLab research group. My research is in the field of Complex Systems, where I apply Complex Network theory to investigate the dynamics of 'Science of Science'.
+
+---
 
     assets:
         disableScrollBarStyle: true
