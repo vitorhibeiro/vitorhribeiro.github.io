@@ -1,7 +1,7 @@
 ---
 title: "Λ polarization from vortex rings as the medium response for jet thermalization" 
 date: 2023-01-17
-#tags: ["philology","oleic science","history of oil","Mediterranean world"]
+tags: ["particle physics","vorticity","jet quenching"]
 author: ["Vítor Hugo Ribeiro", "David Dobrigkeit Chinellato", "Michael Annan Lisa", "Willian Matioli Serenone", "Chun Shen", "Jun Takahashi", "Giorgio Torrieri"]
 #description: "This paper reviews unusual uses for olive oil throughout the Mediterranean world. Published in the Journal of Oleic Science, 2013." 
 summary: "This study investigates the formation of vorticity rings as a mechanism for jet thermalization in high-energy nuclear collisions, using relativistic viscous hydrodynamic simulations. It introduces a robust observable linked to Λ-hyperon polarization, providing a novel way to probe jet–medium interactions and the vorticity structure of the quark–gluon plasma." 
