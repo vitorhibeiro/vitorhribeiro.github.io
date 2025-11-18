@@ -6,7 +6,7 @@ author: ["Vítor Hugo Ribeiro", "David Dobrigkeit Chinellato", "Michael Annan Li
 #description: "This paper reviews unusual uses for olive oil throughout the Mediterranean world. Published in the Journal of Oleic Science, 2013." 
 summary: "This study investigates the formation of vorticity rings as a mechanism for jet thermalization in high-energy nuclear collisions, using relativistic viscous hydrodynamic simulations. It introduces a robust observable linked to Λ-hyperon polarization, providing a novel way to probe jet–medium interactions and the vorticity structure of the quark–gluon plasma." 
 cover:
-    image: "paper1.png"
+    #image: "paper1.png"
     #alt: "Some Uses For Olive Oil"
     relative: true
 editPost:

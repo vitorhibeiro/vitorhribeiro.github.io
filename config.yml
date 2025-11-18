@@ -21,8 +21,8 @@ menu:
         - name: Education
           url: education/
           weight: 3
-        - name: Data
-          url: data/
+        - name: Teaching
+          url: teaching/
           weight: 4
 
 params:
