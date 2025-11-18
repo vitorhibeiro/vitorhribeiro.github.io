@@ -1,6 +1,7 @@
 ---
 title: "🎓 Education"
 description: "Educational info"
+hidemeta: true
 ---
 
 ### PhD in Complex Systems
