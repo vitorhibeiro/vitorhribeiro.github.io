@@ -69,12 +69,8 @@ params:
               url: papers/
             - name: Education
               url: education/
-            - name: Data 
-              url: data/
-            - name: Tags
-              url: tags/
-            - name: Archive
-              url: archive/
+            - name: Teaching 
+              url: teaching/
 
     socialIcons:
     #    - name: CV

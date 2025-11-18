@@ -1,6 +1,8 @@
 ---
-title: "🎓 Education"
-description: "Educational info"
+title: " 👨🏽‍🏫 Teaching"
+description: "Teaching experience info"
+---
+
 ---
 
 ### PhD in Complex Systems
@@ -9,7 +11,7 @@ description: "Educational info"
 + **Period:** 2024 – 2028 (expected)
 + **Advisor:** Haroldo Valentin Ribeiro
 
-My doctoral research is situated within the field of Complex Systems, focusing on the "Science of Science" area. The project involves a large-scale analysis of research metrics and collaboration networks, primarily using data from the Lattes platform—the main curriculum vitae database for the Brazilian scientific community. In this project, by applying complex network, physics, and statistics theory, we aim to identify key structural patterns related to researchers careers and other features for scientific evaluation. A specific goal is to quantify how collaboration influences scientific productivity and impact across different fields.
+My doctoral research is situated within the field of Complex Systems, focusing on the "Science of Science" area. The project involves a large-scale analysis of research metrics and collaboration networks, primarily using data from the Lattes platform—the main curriculum vitae database for the Brazilian** scientific community. In this project, by applying complex network, physics, and statistics theory, we aim to identify key structural patterns related to researchers careers and other features for scientific evaluation. A specific goal is to quantify how collaboration influences scientific productivity and impact across different fields.
 
 ---
 
