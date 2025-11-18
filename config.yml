@@ -84,13 +84,13 @@ params:
     #    - name: Office Hours
     #      url: officehours/
         - name: Google Scholar
-          url: https://scholar.google.com/citations?user=cL23w-4AAAAJ
+          url: https://scholar.google.com/citations?user=63Y_3nAAAAAJ&hl=pt-BR
         - name: Linkedin
-          url: https://scholar.google.com/citations?user=cL23w-4AAAAJ
+          url: https://www.linkedin.com/in/v%C3%ADtor-hugo-ribeiro-690a511aa/
         - name: GitHub
-          url: https://github.com/pmichaillat
-    #    - name: Substack
-    #      url: https://pmichaillat.substack.com
+          url: https://github.com/vitorhibeiro
+        - name: Instagram
+          url: https://www.instagram.com/vitorhibeiro/
     #    - name: YouTube
     #      url: https://www.youtube.com/@pmichaillat
     #    - name: Twitter
