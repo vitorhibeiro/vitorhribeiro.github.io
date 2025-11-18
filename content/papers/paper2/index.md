@@ -4,7 +4,7 @@ date: 2025-11-17
 tags: ["Science of Science","Gender"]
 author: ["Vítor H. Ribeiro", "Andre S. Sunahara", "Golnaz Shahtahmassebi", "Matjaz Perc", "Haroldo V. Ribeiro"]
 #description: "Text under review" 
-summary: "Text under review"
+summary: "Text under review."
 #cover:
     #image: "paper1.png"
     #alt: "Some Uses For Olive Oil"
