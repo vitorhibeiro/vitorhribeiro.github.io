@@ -6,7 +6,7 @@ hidemeta: true
 
 ---
 
-### Teaching Intern – General Physics II
+### 📚 Teaching Intern – General Physics II
 
 + **Campinas State University (UNICAMP)** | Campinas, Brazil
 + **Period:** Aug 2022 – Dec 2022 · 5 months
@@ -15,7 +15,7 @@ Assisted instructors in organizing and uploading course materials on the Moodle 
 
 ---
 
-### Teaching Intern – Classical Mechanics I
+### 📚 Teaching Intern – Classical Mechanics I
 
 + **Campinas State University (UNICAMP)** | Campinas, Brazil
 + **Period:**  Mar 2022 – Jul 2022 · 5 months
@@ -24,7 +24,7 @@ Delivered exercise-solving sessions aligned with the syllabus topics. Offered on
 
 ---
 
-### Undergraduate Teaching Assistant – General Physics I & II
+### 📚 Undergraduate Teaching Assistant – General Physics I & II
 
 + **Maringá State University (UEM)** | Maringá, Brazil
 + **Period:** Mar 2018 – Feb 2020 · 2 years
