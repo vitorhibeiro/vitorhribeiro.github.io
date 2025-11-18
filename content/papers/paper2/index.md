@@ -5,10 +5,10 @@ tags: ["Science of Science","Gender"]
 author: ["Vítor H. Ribeiro", "Andre S. Sunahara", "Golnaz Shahtahmassebi", "Matjaz Perc", "Haroldo V. Ribeiro"]
 #description: "Text under review" 
 summary: "Text under review."
-#cover:
+cover:
     #image: "paper1.png"
     #alt: "Some Uses For Olive Oil"
-    #relative: true
+    relative: true
 #editPost:
     #URL: "https://journals.aps.org/prc/abstract/10.1103/PhysRevC.109.014905"
     #Text: "Physical Review C"
