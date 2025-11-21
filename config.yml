@@ -24,6 +24,9 @@ menu:
         - name: Teaching
           url: teaching/
           weight: 4
+        - name: Projects
+          url: projects/
+          weight: 5
 
 params:
     description: "This website hosts Vítor's research papers, books, course materials, data, curriculum vitae, and contact information."
@@ -72,6 +75,8 @@ params:
               url: education/
             - name: Teaching 
               url: teaching/
+            - name: Projects 
+              url: projects/
 
     socialIcons:
     #    - name: CV
