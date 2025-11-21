@@ -1,0 +1,163 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 600px;
+                 background-color: #ffffff;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"font": {"color": "black"}, "group": 1, "id": "ribeiro_vh", "label": "ribeiro_vh", "shape": "dot", "size": 10, "title": "ribeiro_vh"}, {"font": {"color": "black"}, "group": 1, "id": "chinellato_dd", "label": "chinellato_dd", "shape": "dot", "size": 10, "title": "chinellato_dd"}, {"font": {"color": "black"}, "group": 1, "id": "lisa_ma", "label": "lisa_ma", "shape": "dot", "size": 10, "title": "lisa_ma"}, {"font": {"color": "black"}, "group": 1, "id": "serenone_wm", "label": "serenone_wm", "shape": "dot", "size": 10, "title": "serenone_wm"}, {"font": {"color": "black"}, "group": 1, "id": "shen_c", "label": "shen_c", "shape": "dot", "size": 10, "title": "shen_c"}, {"font": {"color": "black"}, "group": 1, "id": "takahashi_j", "label": "takahashi_j", "shape": "dot", "size": 10, "title": "takahashi_j"}, {"font": {"color": "black"}, "group": 1, "id": "torrieri_g", "label": "torrieri_g", "shape": "dot", "size": 10, "title": "torrieri_g"}, {"font": {"color": "black"}, "group": 1, "id": "caligiuri_a", "label": "caligiuri_a", "shape": "dot", "size": 10, "title": "caligiuri_a"}, {"font": {"color": "black"}, "group": 1, "id": "emery_e", "label": "emery_e", "shape": "dot", "size": 10, "title": "emery_e"}, {"font": {"color": "black"}, "group": 1, "id": "ferreira_l", "label": "ferreira_l", "shape": "dot", "size": 10, "title": "ferreira_l"}, {"font": {"color": "black"}, "group": 1, "id": "garcia-castillo_j", "label": "garcia-castillo_j", "shape": "dot", "size": 10, "title": "garcia-castillo_j"}, {"font": {"color": "black"}, "group": 1, "id": "lindner_sd", "label": "lindner_sd", "shape": "dot", "size": 10, "title": "lindner_sd"}, {"font": {"color": "black"}, "group": 1, "id": "molina-hernandez_j", "label": "molina-hernandez_j", "shape": "dot", "size": 10, "title": "molina-hernandez_j"}, {"font": {"color": "black"}, "group": 1, "id": "passos_nara", "label": "passos_nara", "shape": "dot", "size": 10, "title": "passos_nara"}, {"font": {"color": "black"}, "group": 1, "id": "sartore_m", "label": "sartore_m", "shape": "dot", "size": 10, "title": "sartore_m"}, {"font": {"color": "black"}, "group": 1, "id": "wang_b", "label": "wang_b", "shape": "dot", "size": 10, "title": "wang_b"}, {"font": {"color": "black"}, "group": 1, "id": "calleja-solanas_v", "label": "calleja-solanas_v", "shape": "dot", "size": 10, "title": "calleja-solanas_v"}, {"font": {"color": "black"}, "group": 1, "id": "sunahara_as", "label": "sunahara_as", "shape": "dot", "size": 10, "title": "sunahara_as"}, {"font": {"color": "black"}, "group": 1, "id": "shahtahmassebi_g", "label": "shahtahmassebi_g", "shape": "dot", "size": 10, "title": "shahtahmassebi_g"}, {"font": {"color": "black"}, "group": 1, "id": "perc_m", "label": "perc_m", "shape": "dot", "size": 10, "title": "perc_m"}, {"font": {"color": "black"}, "group": 1, "id": "ribeiro_hv", "label": "ribeiro_hv", "shape": "dot", "size": 10, "title": "ribeiro_hv"}]);
+                  edges = new vis.DataSet([{"from": "ribeiro_vh", "title": "Collaborations: 1", "to": "chinellato_dd", "value": 1, "width": 1}, {"from": "ribeiro_vh", "title": "Collaborations: 1", "to": "lisa_ma", "value": 1, "width": 1}, {"from": "ribeiro_vh", "title": "Collaborations: 1", "to": "serenone_wm", "value": 1, "width": 1}, {"from": "ribeiro_vh", "title": "Collaborations: 1", "to": "shen_c", "value": 1, "width": 1}, {"from": "ribeiro_vh", "title": "Collaborations: 1", "to": "takahashi_j", "value": 1, "width": 1}, {"from": "ribeiro_vh", "title": "Collaborations: 1", "to": "torrieri_g", "value": 1, "width": 1}, {"from": "ribeiro_vh", "title": "Collaborations: 1", "to": "caligiuri_a", "value": 1, "width": 1}, {"from": "ribeiro_vh", "title": "Collaborations: 1", "to": "emery_e", "value": 1, "width": 1}, {"from": "ribeiro_vh", "title": "Collaborations: 1", "to": "ferreira_l", "value": 1, "width": 1}, {"from": "ribeiro_vh", "title": "Collaborations: 1", "to": "garcia-castillo_j", "value": 1, "width": 1}, {"from": "ribeiro_vh", "title": "Collaborations: 1", "to": "lindner_sd", "value": 1, "width": 1}, {"from": "ribeiro_vh", "title": "Collaborations: 1", "to": "molina-hernandez_j", "value": 1, "width": 1}, {"from": "ribeiro_vh", "title": "Collaborations: 1", "to": "passos_nara", "value": 1, "width": 1}, {"from": "ribeiro_vh", "title": "Collaborations: 1", "to": "sartore_m", "value": 1, "width": 1}, {"from": "ribeiro_vh", "title": "Collaborations: 1", "to": "wang_b", "value": 1, "width": 1}, {"from": "ribeiro_vh", "title": "Collaborations: 1", "to": "calleja-solanas_v", "value": 1, "width": 1}, {"from": "ribeiro_vh", "title": "Collaborations: 1", "to": "sunahara_as", "value": 1, "width": 1}, {"from": "ribeiro_vh", "title": "Collaborations: 1", "to": "shahtahmassebi_g", "value": 1, "width": 1}, {"from": "ribeiro_vh", "title": "Collaborations: 1", "to": "perc_m", "value": 1, "width": 1}, {"from": "ribeiro_vh", "title": "Collaborations: 1", "to": "ribeiro_hv", "value": 1, "width": 1}, {"from": "chinellato_dd", "title": "Collaborations: 1", "to": "lisa_ma", "value": 1, "width": 1}, {"from": "chinellato_dd", "title": "Collaborations: 1", "to": "serenone_wm", "value": 1, "width": 1}, {"from": "chinellato_dd", "title": "Collaborations: 1", "to": "shen_c", "value": 1, "width": 1}, {"from": "chinellato_dd", "title": "Collaborations: 1", "to": "takahashi_j", "value": 1, "width": 1}, {"from": "chinellato_dd", "title": "Collaborations: 1", "to": "torrieri_g", "value": 1, "width": 1}, {"from": "lisa_ma", "title": "Collaborations: 1", "to": "serenone_wm", "value": 1, "width": 1}, {"from": "lisa_ma", "title": "Collaborations: 1", "to": "shen_c", "value": 1, "width": 1}, {"from": "lisa_ma", "title": "Collaborations: 1", "to": "takahashi_j", "value": 1, "width": 1}, {"from": "lisa_ma", "title": "Collaborations: 1", "to": "torrieri_g", "value": 1, "width": 1}, {"from": "serenone_wm", "title": "Collaborations: 1", "to": "shen_c", "value": 1, "width": 1}, {"from": "serenone_wm", "title": "Collaborations: 1", "to": "takahashi_j", "value": 1, "width": 1}, {"from": "serenone_wm", "title": "Collaborations: 1", "to": "torrieri_g", "value": 1, "width": 1}, {"from": "shen_c", "title": "Collaborations: 1", "to": "takahashi_j", "value": 1, "width": 1}, {"from": "shen_c", "title": "Collaborations: 1", "to": "torrieri_g", "value": 1, "width": 1}, {"from": "takahashi_j", "title": "Collaborations: 1", "to": "torrieri_g", "value": 1, "width": 1}, {"from": "caligiuri_a", "title": "Collaborations: 1", "to": "emery_e", "value": 1, "width": 1}, {"from": "caligiuri_a", "title": "Collaborations: 1", "to": "ferreira_l", "value": 1, "width": 1}, {"from": "caligiuri_a", "title": "Collaborations: 1", "to": "garcia-castillo_j", "value": 1, "width": 1}, {"from": "caligiuri_a", "title": "Collaborations: 1", "to": "lindner_sd", "value": 1, "width": 1}, {"from": "caligiuri_a", "title": "Collaborations: 1", "to": "molina-hernandez_j", "value": 1, "width": 1}, {"from": "caligiuri_a", "title": "Collaborations: 1", "to": "passos_nara", "value": 1, "width": 1}, {"from": "caligiuri_a", "title": "Collaborations: 1", "to": "sartore_m", "value": 1, "width": 1}, {"from": "caligiuri_a", "title": "Collaborations: 1", "to": "wang_b", "value": 1, "width": 1}, {"from": "caligiuri_a", "title": "Collaborations: 1", "to": "calleja-solanas_v", "value": 1, "width": 1}, {"from": "emery_e", "title": "Collaborations: 1", "to": "ferreira_l", "value": 1, "width": 1}, {"from": "emery_e", "title": "Collaborations: 1", "to": "garcia-castillo_j", "value": 1, "width": 1}, {"from": "emery_e", "title": "Collaborations: 1", "to": "lindner_sd", "value": 1, "width": 1}, {"from": "emery_e", "title": "Collaborations: 1", "to": "molina-hernandez_j", "value": 1, "width": 1}, {"from": "emery_e", "title": "Collaborations: 1", "to": "passos_nara", "value": 1, "width": 1}, {"from": "emery_e", "title": "Collaborations: 1", "to": "sartore_m", "value": 1, "width": 1}, {"from": "emery_e", "title": "Collaborations: 1", "to": "wang_b", "value": 1, "width": 1}, {"from": "emery_e", "title": "Collaborations: 1", "to": "calleja-solanas_v", "value": 1, "width": 1}, {"from": "ferreira_l", "title": "Collaborations: 1", "to": "garcia-castillo_j", "value": 1, "width": 1}, {"from": "ferreira_l", "title": "Collaborations: 1", "to": "lindner_sd", "value": 1, "width": 1}, {"from": "ferreira_l", "title": "Collaborations: 1", "to": "molina-hernandez_j", "value": 1, "width": 1}, {"from": "ferreira_l", "title": "Collaborations: 1", "to": "passos_nara", "value": 1, "width": 1}, {"from": "ferreira_l", "title": "Collaborations: 1", "to": "sartore_m", "value": 1, "width": 1}, {"from": "ferreira_l", "title": "Collaborations: 1", "to": "wang_b", "value": 1, "width": 1}, {"from": "ferreira_l", "title": "Collaborations: 1", "to": "calleja-solanas_v", "value": 1, "width": 1}, {"from": "garcia-castillo_j", "title": "Collaborations: 1", "to": "lindner_sd", "value": 1, "width": 1}, {"from": "garcia-castillo_j", "title": "Collaborations: 1", "to": "molina-hernandez_j", "value": 1, "width": 1}, {"from": "garcia-castillo_j", "title": "Collaborations: 1", "to": "passos_nara", "value": 1, "width": 1}, {"from": "garcia-castillo_j", "title": "Collaborations: 1", "to": "sartore_m", "value": 1, "width": 1}, {"from": "garcia-castillo_j", "title": "Collaborations: 1", "to": "wang_b", "value": 1, "width": 1}, {"from": "garcia-castillo_j", "title": "Collaborations: 1", "to": "calleja-solanas_v", "value": 1, "width": 1}, {"from": "lindner_sd", "title": "Collaborations: 1", "to": "molina-hernandez_j", "value": 1, "width": 1}, {"from": "lindner_sd", "title": "Collaborations: 1", "to": "passos_nara", "value": 1, "width": 1}, {"from": "lindner_sd", "title": "Collaborations: 1", "to": "sartore_m", "value": 1, "width": 1}, {"from": "lindner_sd", "title": "Collaborations: 1", "to": "wang_b", "value": 1, "width": 1}, {"from": "lindner_sd", "title": "Collaborations: 1", "to": "calleja-solanas_v", "value": 1, "width": 1}, {"from": "molina-hernandez_j", "title": "Collaborations: 1", "to": "passos_nara", "value": 1, "width": 1}, {"from": "molina-hernandez_j", "title": "Collaborations: 1", "to": "sartore_m", "value": 1, "width": 1}, {"from": "molina-hernandez_j", "title": "Collaborations: 1", "to": "wang_b", "value": 1, "width": 1}, {"from": "molina-hernandez_j", "title": "Collaborations: 1", "to": "calleja-solanas_v", "value": 1, "width": 1}, {"from": "passos_nara", "title": "Collaborations: 1", "to": "sartore_m", "value": 1, "width": 1}, {"from": "passos_nara", "title": "Collaborations: 1", "to": "wang_b", "value": 1, "width": 1}, {"from": "passos_nara", "title": "Collaborations: 1", "to": "calleja-solanas_v", "value": 1, "width": 1}, {"from": "sartore_m", "title": "Collaborations: 1", "to": "wang_b", "value": 1, "width": 1}, {"from": "sartore_m", "title": "Collaborations: 1", "to": "calleja-solanas_v", "value": 1, "width": 1}, {"from": "wang_b", "title": "Collaborations: 1", "to": "calleja-solanas_v", "value": 1, "width": 1}, {"from": "sunahara_as", "title": "Collaborations: 1", "to": "shahtahmassebi_g", "value": 1, "width": 1}, {"from": "sunahara_as", "title": "Collaborations: 1", "to": "perc_m", "value": 1, "width": 1}, {"from": "sunahara_as", "title": "Collaborations: 1", "to": "ribeiro_hv", "value": 1, "width": 1}, {"from": "shahtahmassebi_g", "title": "Collaborations: 1", "to": "perc_m", "value": 1, "width": 1}, {"from": "shahtahmassebi_g", "title": "Collaborations: 1", "to": "ribeiro_hv", "value": 1, "width": 1}, {"from": "perc_m", "title": "Collaborations: 1", "to": "ribeiro_hv", "value": 1, "width": 1}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "repulsion": {
+            "centralGravity": 0.2,
+            "damping": 0.09,
+            "nodeDistance": 200,
+            "springConstant": 0.05,
+            "springLength": 150
+        },
+        "solver": "repulsion",
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>
