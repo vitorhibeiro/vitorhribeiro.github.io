@@ -2,7 +2,7 @@
 title: "My collaboration network" 
 tags: ["Network","Collaboration"]
 summary: "An interactive map of my academic collaborations. This network visualizes the connections between the researchers I have co-authored papers with, illustrating the evolution of my research partnerships over time." 
-hidemeta: true
+#hidemeta: true
 ---
 
 ### My collaboration network
