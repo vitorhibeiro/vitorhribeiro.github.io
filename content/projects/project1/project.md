@@ -9,7 +9,7 @@ tags: ["Network","Collaboration"]
 #    Text: "GitHub repository"
 #showToc: true
 #disableAnchoredHeadings: false
-
+hidemeta: true
 ---
 
 <div style="width: 100%; height: 650px; border: 1px solid #ddd; border-radius: 8px; overflow: hidden;">
