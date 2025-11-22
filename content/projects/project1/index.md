@@ -11,12 +11,4 @@ Science is rarely a solitary endeavor. In the context of the Science of Science,
 
 This project is an interactive visualization built using Python, NetworkX, and PyVis.
 
-<div style="width: 100%; height: 650px; border: 1px solid #ddd; border-radius: 8px; overflow: hidden;">
-    <iframe 
-        src="/interactive/collaboration_network.html"
-        width="100%" 
-        height="100%" 
-        style="border:none;"
-        title="Collaboration Network">
-    </iframe>
-</div>
+{{< iframe-interactive src="interactive/collaboration_network.html" title="Collaboration Network" >}}
