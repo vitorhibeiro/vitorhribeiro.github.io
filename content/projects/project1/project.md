@@ -1,6 +1,6 @@
 ---
 title: "My collaboration network" 
-date: 2013-03-07
+#date: 2013-03-07
 tags: ["Network","Collaboration"]
 #description: "This dataset contains all irregular verbs in known Romance languages."
 #summary: "This dataset contains all irregular verbs in known Romance languages."
