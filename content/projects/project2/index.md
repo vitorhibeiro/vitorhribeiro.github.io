@@ -23,7 +23,7 @@ let runningData = []; // Variável global para armazenar os dados brutos
 let myChart;          // Variável para a instância do gráfico
 
 async function initDashboard() {
-    const response = await fetch('/data/running_data.json');
+    const response = await fetch('running_data.json');
     runningData = await response.json();
 
     // A. Popular o seletor de anos dinamicamente
