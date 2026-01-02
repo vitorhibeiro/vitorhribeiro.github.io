@@ -5,94 +5,85 @@ summary: "A personal data visualization project that integrates the Strava API t
 hidemeta: true
 ---
 
-<div style="margin-bottom: 20px; font-family: sans-serif;">
-    <label for="yearSelect" style="font-weight: bold; margin-right: 10px;">Select Year:</label>
-    <select id="yearSelect" style="padding: 5px 10px; border-radius: 5px; border: 1px solid #ccc;">
-        <option value="all">All Years</option>
-    </select>
-</div>
+<div id="calendarHeatmap" style="width: 100%; height: 250px; margin-top: 30px;"></div>
 
-<div style="position: relative; height:40vh; width:100%">
-  <canvas id="runningChart"></canvas>
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
 
 <script>
-let runningData = []; // Variável global para armazenar os dados brutos
-let myChart;          // Variável para a instância do gráfico
+let chartDom = document.getElementById('calendarHeatmap');
+let myHeatmap = echarts.init(chartDom);
+let allActivities = []; // Seus dados do JSON
 
-async function initDashboard() {
+async function loadHeatmap() {
     const response = await fetch('running_data.json');
-    runningData = await response.json();
-
-    // A. Popular o seletor de anos dinamicamente
-    const yearSelect = document.getElementById('yearSelect');
-    const years = [...new Set(runningData.map(d => d.year))].sort((a, b) => b - a);
-
-    years.forEach(year => {
-        let option = document.createElement('option');
-        option.value = year;
-        option.text = year;
-        yearSelect.appendChild(option);
-    });
-
-    // B. Escutar mudanças no seletor
-    yearSelect.addEventListener('change', (e) => {
-        updateChart(e.target.value);
-    });
-
-    // C. Renderizar gráfico inicial (ex: ano mais recente ou todos)
-    updateChart('all');
-}
-
-function updateChart(selectedYear) {
-    // 1. Filtrar os dados
-    const filteredData = selectedYear === 'all' 
-        ? runningData 
-        : runningData.filter(d => d.year.toString() === selectedYear.toString());
-
-    // 2. Preparar labels e valores (ex: Distância por data)
-    // Ordenar por data para garantir que o gráfico de linha faça sentido
-    filteredData.sort((a, b) => new Date(a.date) - new Date(b.date));
+    allActivities = await response.json();
     
-    const labels = filteredData.map(d => new Date(d.date).toLocaleDateString());
-    const distances = filteredData.map(d => d.distance_km);
-
-    // 3. Criar ou Atualizar o Gráfico
-    const ctx = document.getElementById('runningChart').getContext('2d');
-
-    if (myChart) {
-        // Se o gráfico já existe, apenas atualizamos os dados
-        myChart.data.labels = labels;
-        myChart.data.datasets[0].data = distances;
-        myChart.update();
-    } else {
-        // Se é a primeira vez, criamos a instância
-        myChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: labels,
-                datasets: [{
-                    label: 'Distance (km)',
-                    data: distances,
-                    borderColor: '#e6550d',
-                    backgroundColor: '#fee6ce',
-                    fill: true,
-                    tension: 0.3,
-                    pointRadius: 4
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: { display: true }
-                }
-            }
-        });
-    }
+    // Pegar o ano atual ou o primeiro do seletor
+    const initialYear = new Date().getFullYear().toString();
+    renderHeatmap(initialYear);
 }
 
-initDashboard();
+function renderHeatmap(year) {
+    // 1. Filtrar e formatar dados para o ECharts: [[data, valor], ...]
+    const heatmapData = allActivities
+        .filter(d => d.year.toString() === year)
+        .map(d => [d.date, d.distance_km]);
+
+    const option = {
+        title: {
+            top: 0,
+            left: 'center',
+            text: `Running Distance (km) - ${year}`
+        },
+        tooltip: {
+            formatter: function (p) {
+                return `${p.data[0]}: ${p.data[1]} km`;
+            }
+        },
+        visualMap: {
+            min: 0,
+            max: 15, // Ajuste baseado no seu volume máximo (ex: 15km)
+            type: 'piecewise',
+            orient: 'horizontal',
+            left: 'center',
+            top: 40,
+            // Cores que lembram o Strava (tons de laranja/vermelho)
+            inRange: {
+                color: ['#eeeeee', '#ffbd8b', '#ff8a3d', '#e65100']
+            }
+        },
+        calendar: {
+            top: 90,
+            left: 30,
+            right: 30,
+            cellSize: ['auto', 13],
+            range: year,
+            itemStyle: {
+                borderWidth: 0.5
+            },
+            yearLabel: { show: false },
+            dayLabel: { nameMap: 'en' },
+            monthLabel: { nameMap: 'en' }
+        },
+        series: {
+            type: 'heatmap',
+            coordinateSystem: 'calendar',
+            data: heatmapData
+        }
+    };
+
+    myHeatmap.setOption(option);
+}
+
+// Integrando com o seu select de ano existente
+document.getElementById('yearSelect').addEventListener('change', (e) => {
+    if(e.target.value !== 'all') {
+        renderHeatmap(e.target.value);
+    }
+});
+
+// Responsividade
+window.addEventListener('resize', () => myHeatmap.resize());
+
+loadHeatmap();
 </script>
