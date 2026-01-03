@@ -58,43 +58,6 @@ hidemeta: true
         let myHourlyChart;
         const heatmapDom = document.getElementById('calendarHeatmap');
 
-        async function start() {
-            try {
-                // Hugo note: ensure running_data.json is in your /static/ folder
-                const response = await fetch('running_data.json');
-                if (!response.ok) throw new Error("Could not load running_data.json");
-                
-                rawData = await response.json();
-                myHeatmap = echarts.init(heatmapDom);
-                myHourlyChart = echarts.init(document.getElementById('hourlyHeatmap'));
-
-                const yearSelect = document.getElementById('yearSelect');
-                const years = [...new Set(rawData.map(d => d.year))].sort((a, b) => b - a);
-                
-                years.forEach(year => {
-                    const opt = document.createElement('option');
-                    opt.value = year;
-                    opt.text = year;
-                    yearSelect.appendChild(opt);
-                });
-
-                renderHeatmap(years[0]);
-
-                yearSelect.addEventListener('change', (e) => {
-                    renderHeatmap(e.target.value);
-                });
-
-                window.addEventListener('resize', () => {
-                                                            myHeatmap.resize();
-                                                            myHourlyChart.resize();
-                                                        });
-
-            } catch (err) {
-                console.error(err);
-                heatmapDom.innerHTML = `<p style="color:red; padding: 20px;">Error: Ensure 'running_data.json' is in your static folder and the site is running on a server.</p>`;
-            }
-        }
-
         function renderHeatmap(year) {
             const heatmapData = rawData
                 .filter(d => d.year.toString() === year.toString())
@@ -154,7 +117,7 @@ hidemeta: true
             // Fill grid with counts from your data
             rawData.filter(d => d.year.toString() === year.toString()).forEach(run => {
                 // This assumes your JSON has 'day_of_week' (0-6) and 'hour' (0-23)
-                const index = run.day_of_week * 24 + run.hour;
+                const index = run.weekday_num * 24 + run.hour;
                 if (punchData[index]) punchData[index][2]++;
             });
 
