@@ -5,8 +5,6 @@ summary: "A personal data visualization project that integrates the Strava API t
 hidemeta: true
 ---
 
-
-
 <style>
     .dashboard-card { 
         width: 100%;
@@ -55,7 +53,6 @@ hidemeta: true
     (function() {
         let rawData = [];
         let myHeatmap;
-        let myHourlyChart;
         const heatmapDom = document.getElementById('calendarHeatmap');
 
         function renderHeatmap(year) {
@@ -101,51 +98,6 @@ hidemeta: true
                 }
             };
             myHeatmap.setOption(option);
-
-            // --- Hourly Heatmap Logic ---
-            const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-            const hours = Array.from({length: 24}, (_, i) => i + ':00');
-
-            // Initialize a 7x24 grid with zeros
-            let punchData = [];
-            for (let d = 0; d < 7; d++) {
-                for (let h = 0; h < 24; h++) {
-                    punchData.push([d, h, 0]);
-                }
-            }
-
-            // Fill grid with counts from your data
-            rawData.filter(d => d.year.toString() === year.toString()).forEach(run => {
-                // This assumes your JSON has 'weekday_num' (0-6) and 'hour' (0-23)
-                const index = run.weekday_num * 24 + run.hour;
-                if (punchData[index]) punchData[index][2]++;
-            });
-
-            const hourlyOption = {
-                title: { text: 'Most Frequent Running Hours', left: 'center', textStyle: { fontSize: 14, color: '#444' } },
-                tooltip: { position: 'top' },
-                grid: { height: '70%', top: '15%' },
-                xAxis: { type: 'category', data: days, splitArea: { show: true } },
-                yAxis: { type: 'category', data: hours, splitArea: { show: true } },
-                visualMap: {
-                    min: 0,
-                    max: 10, // Adjust based on your frequency
-                    calculable: true,
-                    orient: 'horizontal',
-                    left: 'center',
-                    bottom: '0%',
-                    inRange: { color: ['#ebedf0', '#ffbd8b', '#e65100'] }
-                },
-                series: [{
-                    name: 'Runs',
-                    type: 'heatmap',
-                    data: punchData,
-                    label: { show: false },
-                    emphasis: { itemStyle: { shadowBlur: 10, shadowColor: 'rgba(0, 0, 0, 0.5)' } }
-                }]
-            };
-
-            myHourlyChart.setOption(hourlyOption);
         }
 
         start();
