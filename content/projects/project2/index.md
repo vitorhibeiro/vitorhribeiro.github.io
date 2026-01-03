@@ -33,6 +33,8 @@ hidemeta: true
     }
     /* Critical: ECharts needs a defined height to render */
     #calendarHeatmap { width: 100%; height: 280px; }
+    #hourlyHeatmap { width: 100%; height: 300px; margin-top: 20px; }
+
 </style>
 
 <div class="dashboard-card">
@@ -44,6 +46,7 @@ hidemeta: true
         </div>
     </div>
     <div id="calendarHeatmap"></div>
+    <div id="hourlyHeatmap"></div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
@@ -52,6 +55,7 @@ hidemeta: true
     (function() {
         let rawData = [];
         let myHeatmap;
+        let myHourlyChart;
         const heatmapDom = document.getElementById('calendarHeatmap');
 
         async function start() {
@@ -62,6 +66,7 @@ hidemeta: true
                 
                 rawData = await response.json();
                 myHeatmap = echarts.init(heatmapDom);
+                myHourlyChart = echarts.init(document.getElementById('hourlyHeatmap'));
 
                 const yearSelect = document.getElementById('yearSelect');
                 const years = [...new Set(rawData.map(d => d.year))].sort((a, b) => b - a);
@@ -79,7 +84,10 @@ hidemeta: true
                     renderHeatmap(e.target.value);
                 });
 
-                window.addEventListener('resize', () => myHeatmap.resize());
+                window.addEventListener('resize', () => {
+                                                            myHeatmap.resize();
+                                                            myHourlyChart.resize();
+                                                        });
 
             } catch (err) {
                 console.error(err);
@@ -130,6 +138,51 @@ hidemeta: true
                 }
             };
             myHeatmap.setOption(option);
+
+            // --- Hourly Heatmap Logic ---
+            const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+            const hours = Array.from({length: 24}, (_, i) => i + ':00');
+
+            // Initialize a 7x24 grid with zeros
+            let punchData = [];
+            for (let d = 0; d < 7; d++) {
+                for (let h = 0; h < 24; h++) {
+                    punchData.push([d, h, 0]);
+                }
+            }
+
+            // Fill grid with counts from your data
+            rawData.filter(d => d.year.toString() === year.toString()).forEach(run => {
+                // This assumes your JSON has 'day_of_week' (0-6) and 'hour' (0-23)
+                const index = run.day_of_week * 24 + run.hour;
+                if (punchData[index]) punchData[index][2]++;
+            });
+
+            const hourlyOption = {
+                title: { text: 'Most Frequent Running Hours', left: 'center', textStyle: { fontSize: 14, color: '#444' } },
+                tooltip: { position: 'top' },
+                grid: { height: '70%', top: '15%' },
+                xAxis: { type: 'category', data: days, splitArea: { show: true } },
+                yAxis: { type: 'category', data: hours, splitArea: { show: true } },
+                visualMap: {
+                    min: 0,
+                    max: 10, // Adjust based on your frequency
+                    calculable: true,
+                    orient: 'horizontal',
+                    left: 'center',
+                    bottom: '0%',
+                    inRange: { color: ['#ebedf0', '#ffbd8b', '#e65100'] }
+                },
+                series: [{
+                    name: 'Runs',
+                    type: 'heatmap',
+                    data: punchData,
+                    label: { show: false },
+                    emphasis: { itemStyle: { shadowBlur: 10, shadowColor: 'rgba(0, 0, 0, 0.5)' } }
+                }]
+            };
+
+            myHourlyChart.setOption(hourlyOption);
         }
 
         start();
