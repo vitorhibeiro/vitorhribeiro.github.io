@@ -25,7 +25,7 @@ hidemeta: true
         padding-bottom: 10px;
         border-bottom: 1px solid #eee;
     }
-    .dashboard-header h1 { margin: 0; font-size: 1.2rem; color: #333; }
+    .dashboard-header h1 { margin: 0; font-size: 1.0rem; color: #333; }
     #yearSelect { 
         padding: 5px 10px; 
         border-radius: 5px; 
@@ -39,7 +39,7 @@ hidemeta: true
 
 <div class="dashboard-card">
     <div class="dashboard-header">
-        <h2>Running Consistency</h2>
+        <h1>Running Consistency</h1>
         <div>
             <label for="yearSelect" style="font-size: 0.8rem; font-weight: bold; color: #666;">YEAR:</label>
             <select id="yearSelect"></select>
