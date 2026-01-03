@@ -5,6 +5,7 @@ summary: "A personal data visualization project that integrates the Strava API t
 hidemeta: true
 ---
 
+
 <style>
     .dashboard-card { 
         width: 100%;
@@ -31,6 +32,7 @@ hidemeta: true
     }
     /* Critical: ECharts needs a defined height to render */
     #calendarHeatmap { width: 100%; height: 280px; }
+    #hourlyHeatmap { width: 100%; height: 300px; margin-top: 20px; }
 
 </style>
 
@@ -53,6 +55,47 @@ hidemeta: true
         let rawData = [];
         let myHeatmap;
         const heatmapDom = document.getElementById('calendarHeatmap');
+
+        async function start() {
+            try {
+                // Hugo: ensure running_data.json is in your /static/ folder
+                const response = await fetch('running_data.json');
+                if (!response.ok) throw new Error("Could not load running_data.json");
+                
+                rawData = await response.json();
+
+                // Initialize Charts
+                calendarChart = echarts.init(document.getElementById('calendarHeatmap'));
+                hourlyChart = echarts.init(document.getElementById('hourlyHeatmap'));
+
+                // Populate Year Selector
+                const yearSelect = document.getElementById('yearSelect');
+                const years = [...new Set(rawData.map(d => d.year))].sort((a, b) => b - a);
+                
+                years.forEach(year => {
+                    const opt = document.createElement('option');
+                    opt.value = year;
+                    opt.text = year;
+                    yearSelect.appendChild(opt);
+                });
+
+                // Initial Render
+                renderDashboards(years[0]);
+
+                // Listen for changes
+                yearSelect.addEventListener('change', (e) => renderDashboards(e.target.value));
+                
+                // Responsiveness
+                window.addEventListener('resize', () => {
+                    calendarChart.resize();
+                    hourlyChart.resize();
+                });
+
+            } catch (err) {
+                console.error(err);
+                document.getElementById('calendarHeatmap').innerHTML = `<p style="color:red">Error loading data. Check console.</p>`;
+            }
+        }
 
         function renderHeatmap(year) {
             const heatmapData = rawData
