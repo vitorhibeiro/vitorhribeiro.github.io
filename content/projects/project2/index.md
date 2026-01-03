@@ -5,6 +5,8 @@ summary: "A personal data visualization project that integrates the Strava API t
 hidemeta: true
 ---
 
+
+
 <style>
     .dashboard-card { 
         width: 100%;
@@ -18,7 +20,7 @@ hidemeta: true
     .dashboard-header { 
         display: flex; 
         justify-content: space-between; 
-        align-items: center; 
+        align-items: left; 
         margin-bottom: 20px;
         padding-bottom: 10px;
         border-bottom: 1px solid #eee;
@@ -35,7 +37,7 @@ hidemeta: true
 
 <div class="dashboard-card">
     <div class="dashboard-header">
-        <h2>🏃 Running Consistency</h2>
+        <h2>Running Consistency</h2>
         <div>
             <label for="yearSelect" style="font-size: 0.8rem; font-weight: bold; color: #666;">YEAR:</label>
             <select id="yearSelect"></select>
