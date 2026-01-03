@@ -46,7 +46,7 @@ hidemeta: true
 
 <div class="dashboard-card">
     <div class="dashboard-header">
-        <h1>Running Consistency</h1>
+        <h1>Strava data</h1>
         <div>
             <label for="yearSelect" style="font-size: 0.8rem; font-weight: bold; color: #666;">YEAR:</label>
             <select id="yearSelect"></select>
