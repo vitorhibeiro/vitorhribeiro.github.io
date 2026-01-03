@@ -152,7 +152,7 @@ hidemeta: true
             };
 
             // --- 2. HOURLY PUNCH CARD CONFIG ---
-            const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+            const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
             const hours = Array.from({length: 24}, (_, i) => i + ':00');
             
             // Initialize 7x24 grid
@@ -180,6 +180,7 @@ hidemeta: true
                 xAxis: { type: 'category', data: days, splitArea: { show: true } },
                 yAxis: { type: 'category', data: hours, inverse: true, splitArea: { show: true } },
                 visualMap: {
+                    show: false, // This hides the color bar
                     min: 0,
                     max: 5,
                     calculable: true,
