@@ -31,7 +31,7 @@ hidemeta: true
         border: 1px solid #ccc;
     }
     /* Chart Containers */
-    #calendarHeatmap { width: 100%; height: 280px; margin-bottom: 30px; }
+    #calendarHeatmap { width: 100%; height: 280px; margin-bottom: 10px; }
     #hourlyHeatmap { width: 100%; height: 450px; }
     
     .chart-title {
