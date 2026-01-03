@@ -52,9 +52,9 @@ hidemeta: true
             <select id="yearSelect"></select>
         </div>
     </div>
-    <div class="chart-title">Annual Consistency (Distance in km)</div>
+    <div class="chart-title">Annual Consistency</div>
     <div id="calendarHeatmap"></div>
-    <div style="margin-top: 40px;" class="chart-title">Weekly Routine (Frequency by Hour)</div>
+    <div style="margin-top: 10px;" class="chart-title">Weekly Routine (Frequency by Hour)</div>
     <div id="hourlyHeatmap"></div>
 
 </div>
