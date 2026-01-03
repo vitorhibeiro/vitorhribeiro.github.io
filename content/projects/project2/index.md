@@ -9,60 +9,144 @@ hidemeta: true
 
 <script src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
 
+    <style>
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            padding: 40px; 
+            background-color: #f4f7f6; 
+            display: flex;
+            justify-content: center;
+        }
+        .dashboard-card { 
+            width: 100%;
+            max-width: 1000px; 
+            background: white; 
+            padding: 30px; 
+            border-radius: 15px; 
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05); 
+        }
+        .header { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            margin-bottom: 30px;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 15px;
+        }
+        h1 { margin: 0; font-size: 1.5rem; color: #333; }
+        select { 
+            padding: 8px 15px; 
+            border-radius: 8px; 
+            border: 1px solid #ddd; 
+            background-color: #fff;
+            font-size: 0.9rem;
+            cursor: pointer;
+            outline: none;
+        }
+        select:hover { border-color: #e65100; }
+        #calendarHeatmap { width: 100%; height: 300px; }
+    </style>
+</head>
+<body>
+
+<div class="dashboard-card">
+    <div class="header">
+        <h1>🏃 Running Consistency</h1>
+        <div>
+            <label for="yearSelect" style="font-size: 0.8rem; font-weight: bold; color: #666;">YEAR:</label>
+            <select id="yearSelect"></select>
+        </div>
+    </div>
+
+    <div id="calendarHeatmap"></div>
+</div>
+
 <script>
-let chartDom = document.getElementById('calendarHeatmap');
-let myHeatmap = echarts.init(chartDom);
-let allActivities = []; // Seus dados do JSON
+    let rawData = [];
+    let myHeatmap;
 
-async function loadHeatmap() {
-    const response = await fetch('running_data.json');
-    allActivities = await response.json();
-    
-    // Pegar o ano atual ou o primeiro do seletor
-    const initialYear = new Date().getFullYear().toString();
-    renderHeatmap(initialYear);
-}
+    // Inicializa o gráfico
+    const heatmapDom = document.getElementById('calendarHeatmap');
+    myHeatmap = echarts.init(heatmapDom);
 
-function renderHeatmap(year) {
-    // 1. Filtrar e formatar dados para o ECharts: [[data, valor], ...]
-    const heatmapData = allActivities
-        .filter(d => d.year.toString() === year)
+    async function start() {
+        try {
+            // Busca o arquivo JSON (deve estar na mesma pasta)
+            const response = await fetch('running_data.json');
+            if (!response.ok) throw new Error("Não foi possível carregar o JSON.");
+            
+            rawData = await response.json();
+
+            // 1. Configura o Seletor de Anos
+            const yearSelect = document.getElementById('yearSelect');
+            const years = [...new Set(rawData.map(d => d.year))].sort((a, b) => b - a);
+            
+            years.forEach(year => {
+                const opt = document.createElement('option');
+                opt.value = year;
+                opt.text = year;
+                yearSelect.appendChild(opt);
+            });
+
+            // 2. Renderiza o ano mais recente por padrão
+            renderHeatmap(years[0]);
+
+            // 3. Listener para mudança de ano
+            yearSelect.addEventListener('change', (e) => {
+                renderHeatmap(e.target.value);
+            });
+
+        } catch (err) {
+            console.error(err);
+            heatmapDom.innerHTML = `<p style="color:red">Erro: Certifique-se de que 'running_data.json' está na mesma pasta e que o Live Server está ativo.</p>`;
+        }
+    }
+
+    function renderHeatmap(year) {
+    const heatmapData = rawData
+        .filter(d => d.year.toString() === year.toString())
         .map(d => [d.date, d.distance_km]);
 
     const option = {
+        // Usamos o título do gráfico para legendar a escala de cores
         title: {
-            top: 0,
+            text: 'Distance in kilometers',
             left: 'center',
-            text: `Running Distance (km) - ${year}`
+            top: 0,
+            textStyle: {
+                fontSize: 14,
+                fontWeight: 'bold',
+                color: '#444'
+            }
         },
         tooltip: {
-            formatter: function (p) {
-                return `${p.data[0]}: ${p.data[1]} km`;
-            }
+            position: 'top',
+            formatter: (p) => `<b>${p.data[0]}</b><br/>${p.data[1]} km`
         },
         visualMap: {
             min: 0,
-            max: 15, // Ajuste baseado no seu volume máximo (ex: 15km)
+            max: 15,
             type: 'piecewise',
             orient: 'horizontal',
             left: 'center',
-            top: 40,
-            // Cores que lembram o Strava (tons de laranja/vermelho)
+            top: 30, // Posicionado logo abaixo do título interno
+            itemSymbol: 'rect', // Garante que sejam quadrados
             inRange: {
-                color: ['#eeeeee', '#ffbd8b', '#ff8a3d', '#e65100']
+                color: ['#ebedf0', '#ffbd8b', '#ff8a3d', '#e65100']
             }
         },
         calendar: {
-            top: 90,
+            top: 100, // Espaço aumentado para acomodar título + legenda
             left: 30,
             right: 30,
             cellSize: ['auto', 13],
             range: year,
             itemStyle: {
-                borderWidth: 0.5
+                borderWidth: 0.5,
+                borderColor: '#fff'
             },
             yearLabel: { show: false },
-            dayLabel: { nameMap: 'en' },
+            dayLabel: { firstDay: 1, nameMap: 'en' },
             monthLabel: { nameMap: 'en' }
         },
         series: {
@@ -74,16 +158,8 @@ function renderHeatmap(year) {
 
     myHeatmap.setOption(option);
 }
+    // Responsividade
+    window.onresize = () => myHeatmap.resize();
 
-// Integrando com o seu select de ano existente
-document.getElementById('yearSelect').addEventListener('change', (e) => {
-    if(e.target.value !== 'all') {
-        renderHeatmap(e.target.value);
-    }
-});
-
-// Responsividade
-window.addEventListener('resize', () => myHeatmap.resize());
-
-loadHeatmap();
+    start();
 </script>
