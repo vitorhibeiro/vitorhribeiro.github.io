@@ -30,9 +30,17 @@ hidemeta: true
         border-radius: 5px; 
         border: 1px solid #ccc;
     }
-    /* Critical: ECharts needs a defined height to render */
-    #calendarHeatmap { width: 100%; height: 280px; }
-    #hourlyHeatmap { width: 100%; height: 300px; margin-top: 20px; }
+    /* Chart Containers */
+    #calendarHeatmap { width: 100%; height: 280px; margin-bottom: 30px; }
+    #hourlyHeatmap { width: 100%; height: 450px; }
+    
+    .chart-title {
+        text-align: center;
+        font-size: 1rem;
+        font-weight: bold;
+        color: #444;
+        margin-bottom: 10px;
+    }
 
 </style>
 
@@ -44,8 +52,11 @@ hidemeta: true
             <select id="yearSelect"></select>
         </div>
     </div>
+    <div class="chart-title">Annual Consistency (Distance in km)</div>
     <div id="calendarHeatmap"></div>
-    
+    <div style="margin-top: 40px;" class="chart-title">Weekly Routine (Frequency by Hour)</div>
+    <div id="hourlyHeatmap"></div>
+
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
@@ -54,7 +65,7 @@ hidemeta: true
     (function() {
         let rawData = [];
         let myHeatmap;
-        const heatmapDom = document.getElementById('calendarHeatmap');
+        let hourlyChart;
 
         async function start() {
             try {
@@ -97,11 +108,11 @@ hidemeta: true
             }
         }
 
-        function renderHeatmap(year) {
-            const heatmapData = rawData
-                .filter(d => d.year.toString() === year.toString())
-                .map(d => [d.date, d.distance_km]);
+        function renderDashboards(year) {
+            const filteredData = rawData.filter(d => d.year.toString() === year.toString());
 
+            // --- 1. CALENDAR HEATMAP CONFIG ---
+            const calData = filteredData.map(d => [d.date, d.distance_km]);
             const option = {
                 title: {
                     text: 'Distance (km)',
@@ -136,10 +147,61 @@ hidemeta: true
                 series: {
                     type: 'heatmap',
                     coordinateSystem: 'calendar',
-                    data: heatmapData
+                    data: calData
                 }
             };
-            myHeatmap.setOption(option);
+
+            // --- 2. HOURLY PUNCH CARD CONFIG ---
+            const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+            const hours = Array.from({length: 24}, (_, i) => i + ':00');
+            
+            // Initialize 7x24 grid
+            let punchData = [];
+            for (let d = 0; d < 7; d++) {
+                for (let h = 0; h < 24; h++) {
+                    punchData.push([d, h, 0]);
+                }
+            }
+
+            // Fill grid
+            filteredData.forEach(run => {
+                const index = run.weekday_num * 24 + run.hour;
+                if (punchData[index]) {
+                    punchData[index][2]++;
+                }
+            });
+
+            const hourlyOption = {
+                tooltip: {
+                    position: 'top',
+                    formatter: (p) => `${days[p.data[0]]} @ ${p.data[1]}:00 <br/><b>${p.data[2]} runs</b>`
+                },
+                grid: { height: '75%', top: '5%', right: '5%' },
+                xAxis: { type: 'category', data: days, splitArea: { show: true } },
+                yAxis: { type: 'category', data: hours, inverse: true, splitArea: { show: true } },
+                visualMap: {
+                    min: 0,
+                    max: 5,
+                    calculable: true,
+                    orient: 'horizontal',
+                    left: 'center',
+                    bottom: 0,
+                    inRange: { color: ['#ebedf0', '#ffbd8b', '#e65100'] }
+                },
+                series: [{
+                    name: 'Frequency',
+                    type: 'heatmap',
+                    data: punchData,
+                    label: { show: false },
+                    emphasis: {
+                        itemStyle: { shadowBlur: 10, shadowColor: 'rgba(0, 0, 0, 0.5)' }
+                    }
+                }]
+            };
+
+            // Apply options
+            calendarChart.setOption(calOption);
+            hourlyChart.setOption(hourlyOption);
         }
 
         start();
