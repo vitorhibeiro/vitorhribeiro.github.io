@@ -31,7 +31,6 @@ hidemeta: true
     }
     /* Critical: ECharts needs a defined height to render */
     #calendarHeatmap { width: 100%; height: 280px; }
-    #hourlyHeatmap { width: 100%; height: 300px; margin-top: 20px; }
 
 </style>
 
