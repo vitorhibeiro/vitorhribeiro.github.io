@@ -5,7 +5,7 @@ summary: "A personal data visualization project that integrates the Strava API t
 hidemeta: true
 ---
 
-<div id="calendarHeatmap" style="width: 100%; height: 250px; margin-top: 30px;"></div>
+<div id="calendarHeatmap" style="width: 100%; height: 100px; margin-top: 30px;"></div>
 
 <script src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
 
