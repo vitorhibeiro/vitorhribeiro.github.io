@@ -113,7 +113,7 @@ hidemeta: true
 
             // --- 1. CALENDAR HEATMAP CONFIG ---
             const calData = filteredData.map(d => [d.date, d.distance_km]);
-            const option = {
+            const calOption = {
                 title: {
                     text: 'Distance (km)',
                     left: 'center',
