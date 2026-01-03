@@ -46,7 +46,7 @@ hidemeta: true
         </div>
     </div>
     <div id="calendarHeatmap"></div>
-    <div id="hourlyHeatmap"></div>
+    
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
@@ -116,7 +116,7 @@ hidemeta: true
 
             // Fill grid with counts from your data
             rawData.filter(d => d.year.toString() === year.toString()).forEach(run => {
-                // This assumes your JSON has 'day_of_week' (0-6) and 'hour' (0-23)
+                // This assumes your JSON has 'weekday_num' (0-6) and 'hour' (0-23)
                 const index = run.weekday_num * 24 + run.hour;
                 if (punchData[index]) punchData[index][2]++;
             });
