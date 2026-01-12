@@ -61,6 +61,14 @@ hidemeta: true
         <label for="tab2" class="nav-btn">📅 Annual Analysis</label>
     </div>
     <div id="general-content" class="tab-content">
+        <div class="activity-timeline" style="margin-top: 30px; padding: 20px; background: #fff; border-radius: 10px; border-left: 4px solid #e65100; box-shadow: inset 0 0 10px rgba(0,0,0,0.02);">
+        <p style="margin: 5px 0; font-size: 1.1rem; color: #444;">
+            <strong>First Activity:</strong> <span id="firstDate" style="color: #e65100; font-weight: bold;">-</span>
+        </p>
+        <p style="margin: 5px 0; font-size: 1.1rem; color: #444;">
+            <strong>Last Activity:</strong> <span id="lastDate" style="color: #e65100; font-weight: bold;">-</span>
+        </p>
+    </div>
         <div class="stats-row">
             <div class="stat-card">
                 <div class="stat-value" id="totalKm">0</div>
@@ -128,6 +136,20 @@ hidemeta: true
         const totalKm = rawData.reduce((sum, r) => sum + r.distance_km, 0);
         document.getElementById('totalKm').innerText = totalKm.toFixed(1);
         document.getElementById('totalRuns').innerText = rawData.length;
+        // 2. Find First and Last Activities
+        if (rawData.length > 0) {
+            // Extract all dates and sort them
+            const dates = rawData.map(r => r.date).sort();     
+            const first = dates[0];
+            const last = dates[dates.length - 1];
+            // Format function (transforms YYYY-MM-DD to DD/MM/YYYY for better reading)
+            const formatDate = (dateStr) => {
+                const [y, m, d] = dateStr.split('-');
+                return `${d}/${m}/${y}`;
+            };
+            document.getElementById('firstDate').innerText = formatDate(first);
+            document.getElementById('lastDate').innerText = formatDate(last);
+        }
         // Group data by Month-Year for the bar chart
         // (Assuming your data has "date" as YYYY-MM-DD)
         const monthlyData = {};
