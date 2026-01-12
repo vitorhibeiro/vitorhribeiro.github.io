@@ -69,18 +69,18 @@ hidemeta: true
             <strong>Last Activity:</strong> <span id="lastDate" style="color: #e65100; font-weight: bold;">-</span>
         </p>
     </div>
-        <div class="stats-row">
-            <div class="stat-card">
-                <div class="stat-value" id="totalKm">0</div>
-                <div class="stat-label">Total Kilometers</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-value" id="totalRuns">0</div>
-                <div class="stat-label">Total Activities</div>
-            </div>
+    <div class="stats-row">
+        <div class="stat-card">
+            <div class="stat-value" id="totalKm">0</div>
+            <div class="stat-label">Total Kilometers</div>
         </div>
-        <h3 style="text-align:center; color:#444;">Monthly Volume Over Time</h3>
-        <div id="allTimeChart"></div>
+        <div class="stat-card">
+            <div class="stat-value" id="totalRuns">0</div>
+            <div class="stat-label">Total Activities</div>
+        </div>
+    </div>
+    <h3 style="text-align:center; color:#444; margin-top: 40px;">Distance Frequency Distribution</h3>
+    <div id="distFreqChart" style="width: 100%; height: 350px;"></div>
     </div>
     <div id="annual-content" class="tab-content">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
@@ -104,6 +104,7 @@ hidemeta: true
             const response = await fetch('running_data.json');
             rawData = await response.json();
             // Init General Chart
+            charts.distFreq = echarts.init(document.getElementById('distFreqChart'));
             // Init Annual Charts
             charts.calendar = echarts.init(document.getElementById('calendarHeatmap'));
             charts.hourly = echarts.init(document.getElementById('hourlyHeatmap'));
@@ -148,6 +149,51 @@ hidemeta: true
             };
             document.getElementById('firstDate').innerText = formatDate(first);
             document.getElementById('lastDate').innerText = formatDate(last);
+            // 2. SCATTERPLOT LOGIC: Frequency vs Distance
+            const freqMap = {};
+            rawData.forEach(r => {
+                // Round to 1 decimal place to group similar runs (e.g., 5.0km)
+                const d = parseFloat(r.distance_km).toFixed(1);
+                freqMap[d] = (freqMap[d] || 0) + 1;
+            });
+            // Convert Map to [x, y] coordinates: [Number of Activities, Distance]
+            const scatterData = Object.keys(freqMap).map(dist => [
+            freqMap[dist],       // x: Number of activities
+            parseFloat(dist)     // y: Distance in km
+            ]);
+            const scatterOption = {
+                tooltip: {
+                    formatter: (p) => `Distance: <b>${p.data[1]} km</b><br/>Frequency: <b>${p.data[0]} times</b>`
+                },
+                grid: { left: '10%', right: '10%', bottom: '15%', top: '10%' },
+                xAxis: { 
+                    name: 'Activities (Count)', 
+                    nameLocation: 'middle', 
+                    nameGap: 30,
+                    type: 'value',
+                    splitLine: { lineStyle: { type: 'dashed' } }
+                },
+                yAxis: { 
+                    name: 'Distance (km)', 
+                    type: 'value',
+                    splitLine: { lineStyle: { type: 'dashed' } }
+                },
+                series: [{
+                    symbolSize: 15,
+                    data: scatterData,
+                    type: 'scatter',
+                    itemStyle: {
+                        color: '#e65100',
+                        opacity: 0.6,
+                        borderColor: '#fff',
+                        borderWidth: 1
+                    },
+                    emphasis: {
+                        itemStyle: { opacity: 1, shadowBlur: 10, shadowColor: 'rgba(0,0,0,0.3)' }
+                    }
+                }]
+            };
+            charts.distFreq.setOption(scatterOption);
         }
     }
     function renderAnnual(year) {
