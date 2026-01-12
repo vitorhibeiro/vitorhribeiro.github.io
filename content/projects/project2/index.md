@@ -142,7 +142,7 @@ hidemeta: true
             const dates = rawData.map(r => r.date).sort();     
             const first = dates[0];
             const last = dates[dates.length - 1];
-            // Format function (transforms YYYY-MM-DD to DD/MM/YYYY for better reading)
+            // Format function (transforms date for better reading)
             const formatDate = (dateStr) => {
                 // Extract day (before "T")
                 const day = dateStr.split('T')[0];
