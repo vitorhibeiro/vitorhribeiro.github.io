@@ -104,7 +104,6 @@ hidemeta: true
             const response = await fetch('running_data.json');
             rawData = await response.json();
             // Init General Chart
-            charts.general = echarts.init(document.getElementById('allTimeChart'));
             // Init Annual Charts
             charts.calendar = echarts.init(document.getElementById('calendarHeatmap'));
             charts.hourly = echarts.init(document.getElementById('hourlyHeatmap'));
