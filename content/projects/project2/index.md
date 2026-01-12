@@ -144,8 +144,15 @@ hidemeta: true
             const last = dates[dates.length - 1];
             // Format function (transforms YYYY-MM-DD to DD/MM/YYYY for better reading)
             const formatDate = (dateStr) => {
-                const [y, m, d] = dateStr.split('-');
-                return `${d}/${m}/${y}`;
+                // Extract day (before "T")
+                const day = dateStr.split('T')[0];
+                // Extract month and year (after "/")
+                const [, month, year] = dateStr.match(/\/(\d{2})\/(\d{4})/);
+                return date.toLocaleDateString('en-US', {
+                    day: 'numeric',
+                    month: 'long',
+                    year: 'numeric'
+                });
             };
             document.getElementById('firstDate').innerText = formatDate(first);
             document.getElementById('lastDate').innerText = formatDate(last);
