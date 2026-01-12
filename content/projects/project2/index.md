@@ -85,3 +85,91 @@ hidemeta: true
         <div id="hourlyHeatmap"></div>
     </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
+<script>
+(function() {
+    let rawData = [];
+    let charts = { general: null, calendar: null, hourly: null };
+    async function start() {
+        try {
+            const response = await fetch('running_data.json');
+            rawData = await response.json();
+            // Init General Chart
+            charts.general = echarts.init(document.getElementById('allTimeChart'));
+            // Init Annual Charts
+            charts.calendar = echarts.init(document.getElementById('calendarHeatmap'));
+            charts.hourly = echarts.init(document.getElementById('hourlyHeatmap'));
+            // Setup Year Select
+            const yearSelect = document.getElementById('yearSelect');
+            const years = [...new Set(rawData.map(d => d.year))].sort((a, b) => b - a);
+            years.forEach(y => {
+                let opt = document.createElement('option'); opt.value = y; opt.text = y;
+                yearSelect.appendChild(opt);
+            });
+            // Initial Renders
+            renderGeneral();
+            renderAnnual(years[0]);
+            // Events
+            yearSelect.addEventListener('change', (e) => renderAnnual(e.target.value));
+            // Critical: Resize when switching tabs
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    setTimeout(() => { 
+                        Object.values(charts).forEach(c => c && c.resize());
+                    }, 50);
+                });
+            });
+            window.addEventListener('resize', () => Object.values(charts).forEach(c => c && c.resize()));
+        } catch (e) { console.error(e); }
+    }
+    function renderGeneral() {
+        // Calculate Totals
+        const totalKm = rawData.reduce((sum, r) => sum + r.distance_km, 0);
+        document.getElementById('totalKm').innerText = totalKm.toFixed(1);
+        document.getElementById('totalRuns').innerText = rawData.length;
+        // Group data by Month-Year for the bar chart
+        // (Assuming your data has "date" as YYYY-MM-DD)
+        const monthlyData = {};
+        rawData.forEach(r => {
+            const monthKey = r.date.substring(0, 7); // "YYYY-MM"
+            monthlyData[monthKey] = (monthlyData[monthKey] || 0) + r.distance_km;
+        });
+        const sortedMonths = Object.keys(monthlyData).sort();
+        charts.general.setOption({
+            tooltip: { trigger: 'axis' },
+            xAxis: { type: 'category', data: sortedMonths },
+            yAxis: { type: 'value', name: 'km' },
+            series: [{
+                data: sortedMonths.map(m => monthlyData[m]),
+                type: 'bar',
+                itemStyle: { color: '#ff8a3d' }
+            }]
+        });
+    }
+    function renderAnnual(year) {
+        const filtered = rawData.filter(d => d.year.toString() === year.toString());
+        // --- Calendar Heatmap ---
+        charts.calendar.setOption({
+            visualMap: { min: 0, max: 15, show: false, inRange: { color: ['#ebedf0', '#e65100'] } },
+            calendar: { range: year, cellSize: ['auto', 12], left: 40, right: 10, top: 40, dayLabel: {firstDay: 1} },
+            series: { type: 'heatmap', coordinateSystem: 'calendar', data: filtered.map(d => [d.date, d.distance_km]) }
+        });
+        // --- Hourly Heatmap (The Punch Card) ---
+        let punchData = [];
+        for (let d = 0; d < 7; d++) for (let h = 0; h < 24; h++) punchData.push([d, h, 0]);
+        filtered.forEach(r => {
+            const idx = (r.weekday_num * 24) + r.hour;
+            if(punchData[idx]) punchData[idx][2]++;
+        });
+        charts.hourly.setOption({
+            xAxis: { type: 'category', data: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'] },
+            yAxis: { type: 'category', data: Array.from({length: 24}, (_, i) => i + ':00'), inverse: true },
+            visualMap: { show: false, min: 0, max: 5, inRange: { color: ['#ebedf0', '#ff8a3d', '#e65100'] } },
+            grid: { top: '5%', bottom: '10%' },
+            series: [{ type: 'heatmap', data: punchData }]
+        });
+    }
+    start();
+})();
+</script>
