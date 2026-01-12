@@ -148,27 +148,93 @@ hidemeta: true
         });
     }
     function renderAnnual(year) {
-        const filtered = rawData.filter(d => d.year.toString() === year.toString());
+        const filteredData = rawData.filter(d => d.year.toString() === year.toString());
         // --- Calendar Heatmap ---
-        charts.calendar.setOption({
-            visualMap: { min: 0, max: 15, show: false, inRange: { color: ['#ebedf0', '#e65100'] } },
-            calendar: { range: year, cellSize: ['auto', 12], left: 40, right: 10, top: 40, dayLabel: {firstDay: 1} },
-            series: { type: 'heatmap', coordinateSystem: 'calendar', data: filtered.map(d => [d.date, d.distance_km]) }
-        });
+        const calData = filteredData.map(d => [d.date, d.distance_km]);
+        const calOption = {
+            title: {
+                text: 'Distance (km)',
+                left: 'center',
+                top: 0,
+                textStyle: { fontSize: 14, color: '#444' }
+            },
+            tooltip: {
+                position: 'top',
+                formatter: (p) => `<b>${p.data[0]}</b><br/>${p.data[1]} km`
+            },
+            visualMap: {
+                min: 0,
+                max: 15,
+                type: 'piecewise',
+                orient: 'horizontal',
+                left: 'center',
+                top: 30,
+                inRange: { color: ['#ebedf0', '#ffbd8b', '#ff8a3d', '#e65100'] }
+            },
+            calendar: {
+                top: 100,
+                left: 40,
+                right: 10,
+                cellSize: ['auto', 13],
+                range: year,
+                itemStyle: { borderWidth: 0.5, borderColor: '#fff' },
+                yearLabel: { show: false },
+                dayLabel: { firstDay: 1, nameMap: 'en' },
+                monthLabel: { nameMap: 'en' }
+            },
+            series: {
+                type: 'heatmap',
+                coordinateSystem: 'calendar',
+                data: calData
+            }
+        };
+        charts.calendar.setOption(calOption);
         // --- Hourly Heatmap (The Punch Card) ---
+        const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+        const hours = Array.from({length: 24}, (_, i) => i + ':00');
+        // Initialize 7x24 grid
         let punchData = [];
-        for (let d = 0; d < 7; d++) for (let h = 0; h < 24; h++) punchData.push([d, h, 0]);
-        filtered.forEach(r => {
-            const idx = (r.weekday_num * 24) + r.hour;
-            if(punchData[idx]) punchData[idx][2]++;
+        for (let d = 0; d < 7; d++) {
+            for (let h = 0; h < 24; h++) {
+                punchData.push([d, h, 0]);
+            }
+        }
+        // Fill grid
+        filteredData.forEach(run => {
+            const index = run.weekday_num * 24 + run.hour;
+            if (punchData[index]) {
+                punchData[index][2]++;
+            }
         });
-        charts.hourly.setOption({
-            xAxis: { type: 'category', data: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'] },
-            yAxis: { type: 'category', data: Array.from({length: 24}, (_, i) => i + ':00'), inverse: true },
-            visualMap: { show: false, min: 0, max: 5, inRange: { color: ['#ebedf0', '#ff8a3d', '#e65100'] } },
-            grid: { top: '5%', bottom: '10%' },
-            series: [{ type: 'heatmap', data: punchData }]
-        });
+        const hourlyOption = {
+            tooltip: {
+                position: 'top',
+                formatter: (p) => `${days[p.data[0]]} @ ${p.data[1]}:00 <br/><b>${p.data[2]} runs</b>`
+            },
+            grid: { height: '75%', top: '5%', right: '5%' },
+            xAxis: { type: 'category', data: days, splitArea: { show: true } },
+            yAxis: { type: 'category', data: hours, inverse: true, splitArea: { show: true } },
+            visualMap: {
+                show: false, // This hides the color bar
+                min: 0,
+                max: 5,
+                calculable: true,
+                orient: 'horizontal',
+                left: 'center',
+                bottom: 0,
+                inRange: { color: ['#ebedf0', '#ffbd8b', '#e65100'] }
+            },
+            series: [{
+                name: 'Frequency',
+                type: 'heatmap',
+                data: punchData,
+                label: { show: false },
+                emphasis: {
+                    itemStyle: { shadowBlur: 10, shadowColor: 'rgba(0, 0, 0, 0.5)' }
+                }
+            }]
+        };
+        charts.hourly.setOption(hourlyOption);
     }
     start();
 })();
