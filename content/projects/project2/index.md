@@ -150,24 +150,6 @@ hidemeta: true
             document.getElementById('firstDate').innerText = formatDate(first);
             document.getElementById('lastDate').innerText = formatDate(last);
         }
-        // Group data by Month-Year for the bar chart
-        // (Assuming your data has "date" as YYYY-MM-DD)
-        const monthlyData = {};
-        rawData.forEach(r => {
-            const monthKey = r.date.substring(0, 7); // "YYYY-MM"
-            monthlyData[monthKey] = (monthlyData[monthKey] || 0) + r.distance_km;
-        });
-        const sortedMonths = Object.keys(monthlyData).sort();
-        charts.general.setOption({
-            tooltip: { trigger: 'axis' },
-            xAxis: { type: 'category', data: sortedMonths },
-            yAxis: { type: 'value', name: 'km' },
-            series: [{
-                data: sortedMonths.map(m => monthlyData[m]),
-                type: 'bar',
-                itemStyle: { color: '#ff8a3d' }
-            }]
-        });
     }
     function renderAnnual(year) {
         const filteredData = rawData.filter(d => d.year.toString() === year.toString());
