@@ -144,15 +144,27 @@ hidemeta: true
             const last = dates[dates.length - 1];
             // Format function (transforms date for better reading)
             const formatDate = (dateStr) => {
-                // Extract day (before "T")
-                const day = dateStr.split('T')[0];
-                // Extract month and year (after "/")
-                const [, month, year] = dateStr.match(/\/(\d{2})\/(\d{4})/);
-                return date.toLocaleDateString('en-US', {
-                    day: 'numeric',
-                    month: 'long',
-                    year: 'numeric'
-                });
+                try {
+                    // 1. Extract the Day: splits at "T" and takes the first part ("19")
+                    const day = parseInt(dateStr.split('T')[0]);
+                    // 2. Extract Month and Year: uses your regex to find "/09/2020"
+                    const match = dateStr.match(/\/(\d{2})\/(\d{4})/);
+                    if (!match) return dateStr; // Fallback if format is wrong
+                    const month = parseInt(match[1]); // "09" -> 9
+                    const year = parseInt(match[2]);  // "2020" -> 2020
+                    // 3. Create a valid Javascript Date object
+                    // NOTE: In JavaScript, months are 0-indexed (January is 0, September is 8)
+                    const dateObj = new Date(year, month - 1, day);
+                    // 4. Return the formatted string
+                    return dateObj.toLocaleDateString('en-US', {
+                        day: 'numeric',
+                        month: 'long',
+                        year: 'numeric'
+                    });
+                } catch (e) {
+                    console.error("Date parsing error:", e);
+                    return dateStr; // Return original if something fails
+                }
             };
             document.getElementById('firstDate').innerText = formatDate(first);
             document.getElementById('lastDate').innerText = formatDate(last);
