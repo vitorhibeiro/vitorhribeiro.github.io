@@ -56,12 +56,10 @@ hidemeta: true
 <div class="dashboard-hub">
     <input type="radio" name="main-tabs" id="tab1" checked>
     <input type="radio" name="main-tabs" id="tab2">
-
     <div class="dashboard-nav">
         <label for="tab1" class="nav-btn">📈 General Analysis</label>
         <label for="tab2" class="nav-btn">📅 Annual Analysis</label>
     </div>
-
     <div id="general-content" class="tab-content">
         <div class="stats-row">
             <div class="stat-card">
@@ -76,16 +74,13 @@ hidemeta: true
         <h3 style="text-align:center; color:#444;">Monthly Volume Over Time</h3>
         <div id="allTimeChart"></div>
     </div>
-
     <div id="annual-content" class="tab-content">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
             <h2 style="margin:0; font-size: 1.2rem;">Annual Drill-down</h2>
             <select id="yearSelect" style="padding: 5px 10px; border-radius: 5px;"></select>
         </div>
-        
         <p style="text-align:center; font-weight:bold; color:#666;">Distance Heatmap</p>
         <div id="calendarHeatmap"></div>
-        
         <p style="text-align:center; font-weight:bold; color:#666; margin-top:30px;">Hourly Frequency</p>
         <div id="hourlyHeatmap"></div>
     </div>
