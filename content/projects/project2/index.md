@@ -150,7 +150,7 @@ hidemeta: true
             const day = record.day;
             const month = record.month_name;
             const year = record.year;
-            return return `${day}, ${month}, ${year}`;
+            return `${day}, ${month}, ${year}`;
             };
             document.getElementById('firstDate').innerText = formatDate(first);
             document.getElementById('lastDate').innerText = formatDate(last);
