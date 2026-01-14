@@ -160,7 +160,7 @@ hidemeta: true
                 const d = parseFloat(r.distance_km).toFixed(1);
                 freqMap[d] = (freqMap[d] || 0) + 1;
             });
-            // Convert Map to [x, y] coordinates: [Number of Activities, Distance]
+            // Convert Map to [x, y] coordinates: [Distance, Number of Activities]
             const scatterData = Object.keys(freqMap).map(dist => [
                 parseFloat(dist),    // x: Now Distance
                 freqMap[dist]        // y: Now Frequency
