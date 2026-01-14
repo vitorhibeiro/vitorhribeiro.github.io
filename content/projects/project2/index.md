@@ -139,32 +139,18 @@ hidemeta: true
         // 2. Find First and Last Activities
         if (rawData.length > 0) {
             // Extract all dates and sort them
-            const dates = rawData.map(r => r.date).sort();     
-            const first = dates[0];
-            const last = dates[dates.length - 1];
+            const sortedData = [...rawData].sort(
+                (a, b) => new Date(a.date) - new Date(b.date)
+            );     
+            const firstRecord = sortedData[0];
+            const lastRecord = sortedData[sortedData.length - 1];
             // Format function (transforms date for better reading)
-            const formatDate = (dateStr) => {
-                try {
-                    // 1. Extract the Day: splits at "T" and takes the first part ("19")
-                    const day = parseInt(dateStr.split('T')[0]);
-                    // 2. Extract Month and Year: uses your regex to find "/09/2020"
-                    const match = dateStr.match(/\/(\d{2})\/(\d{4})/);
-                    if (!match) return dateStr; // Fallback if format is wrong
-                    const month = parseInt(match[1]); // "09" -> 9
-                    const year = parseInt(match[2]);  // "2020" -> 2020
-                    // 3. Create a valid Javascript Date object
-                    // NOTE: In JavaScript, months are 0-indexed (January is 0, September is 8)
-                    const dateObj = new Date(year, month - 1, day);
-                    // 4. Return the formatted string
-                    return dateObj.toLocaleDateString('en-US', {
-                        day: 'numeric',
-                        month: 'long',
-                        year: 'numeric'
-                    });
-                } catch (e) {
-                    console.error("Date parsing error:", e);
-                    return dateStr; // Return original if something fails
-                }
+            const formatDate = (record) => {
+            // 1. Extract the Day: splits at "T" and takes the first part ("19")
+            const day = record.day;
+            const month = record.month_name;
+            const year = record.year;
+            return return `${day}, ${month}, ${year}`;
             };
             document.getElementById('firstDate').innerText = formatDate(first);
             document.getElementById('lastDate').innerText = formatDate(last);
