@@ -233,12 +233,29 @@ hidemeta: true
                     name: 'Distance (i)', 
                     nameLocation: 'middle', 
                     nameGap: 30,
-                    min: 1 
+                    min: 1,
+                    max: 25,
+                    // Use logBase 10 but force minor ticks
+                    logBase: 10,
+                    axisLabel: {
+                        formatter: (value) => {
+                            // This ensures common numbers are labeled even on a log scale
+                            const labels = [1, 2, 3, 5, 10, 15, 20, 25];
+                            return labels.includes(value) ? value : '';
+                        }
+                    },
+                    // Adding more ticks
+                    splitLine: {
+                        show: true,
+                        lineStyle: { color: '#eee' }
+                    }
                 },
                 yAxis: { 
                     type: 'log', 
                     name: 'Count (Runs > i)', 
-                    min: 1 
+                    min: 1,
+                    // Optional: set a max for y if you want the vertical scale to stay fixed
+                    max: 1000 
                 },
                 series: [
                     {
@@ -251,8 +268,8 @@ hidemeta: true
                     {
                         name: 'y = x Reference',
                         type: 'line',
-                        // We draw the line from 1 to at least 20 (as per your Python code)
-                        data: [[1, 1], [Math.max(20, maxDist), Math.max(20, maxDist)]],
+                        // Switched to end at 25 to match your new x-axis range
+                        data: [[1, 1], [25, 25]], 
                         symbol: 'none',
                         lineStyle: { color: 'orange', width: 2, type: 'dashed' },
                         label: {
