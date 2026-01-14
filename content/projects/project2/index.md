@@ -167,7 +167,7 @@ hidemeta: true
             ]);
             const scatterOption = {
                 tooltip: {
-                    formatter: (p) => `Distance: <b>${p.data[1]} km</b><br/>Frequency: <b>${p.data[0]} times</b>`
+                    formatter: (p) => `Distance: <b>${p.data[0]} km</b><br/>Frequency: <b>${p.data[1]} times</b>`
                 },
                 grid: { left: '10%', right: '10%', bottom: '15%', top: '10%' },
                 xAxis: { 
