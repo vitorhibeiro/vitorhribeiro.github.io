@@ -42,7 +42,7 @@ hidemeta: true
     #tab2:checked ~ #annual-content { display: block; }
 
     /* General Stats Cards */
-    .stats-row { display: flex; gap: 20px; margin-bottom: 20px; }
+    .stats-row { display: flex; gap: 20px; padding: 20px; }
     .stat-card { flex: 1; background: #fff5ed; padding: 20px; border-radius: 10px; text-align: center; border: 1px solid #ffbd8b; }
     .stat-value { font-size: 2rem; font-weight: bold; color: #e65100; }
     .stat-label { font-size: 0.9rem; color: #666; }
@@ -69,7 +69,7 @@ hidemeta: true
             <strong>Last Activity:</strong> <span id="lastDate" style="color: #e65100; font-weight: bold;">-</span>
         </p>
     </div>
-    <div class="stats-row", style="margin-top: 10px;">
+    <div class="stats-row">
         <div class="stat-card">
             <div class="stat-value" id="totalKm">0</div>
             <div class="stat-label">Total Kilometers</div>
@@ -162,8 +162,8 @@ hidemeta: true
             });
             // Convert Map to [x, y] coordinates: [Number of Activities, Distance]
             const scatterData = Object.keys(freqMap).map(dist => [
-            freqMap[dist],       // x: Number of activities
-            parseFloat(dist)     // y: Distance in km
+                parseFloat(dist),    // x: Now Distance
+                freqMap[dist]        // y: Now Frequency
             ]);
             const scatterOption = {
                 tooltip: {
