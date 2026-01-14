@@ -69,7 +69,7 @@ hidemeta: true
             <strong>Last Activity:</strong> <span id="lastDate" style="color: #e65100; font-weight: bold;">-</span>
         </p>
     </div>
-    <div class="stats-row">
+    <div class="stats-row", style="margin-top: 10px;">
         <div class="stat-card">
             <div class="stat-value" id="totalKm">0</div>
             <div class="stat-label">Total Kilometers</div>
