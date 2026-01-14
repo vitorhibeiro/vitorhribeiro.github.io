@@ -81,6 +81,11 @@ hidemeta: true
     </div>
     <h3 style="text-align:center; color:#444; margin-top: 40px;">Distance Frequency Distribution</h3>
     <div id="distFreqChart" style="width: 100%; height: 350px;"></div>
+    <h3 style="text-align:center; color:#444; margin-top: 40px;">Running Index ($r$-index)</h3>
+    <p style="text-align:center; font-size: 0.9rem; color: #666; margin-bottom: 10px;">
+        Log-Log plot of Distance ($i$) vs. Number of activities with distance $> i$
+    </p>
+    <div id="rIndexChart" style="width: 100%; height: 400px;"></div>
     </div>
     <div id="annual-content" class="tab-content">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
@@ -105,6 +110,7 @@ hidemeta: true
             rawData = await response.json();
             // Init General Chart
             charts.distFreq = echarts.init(document.getElementById('distFreqChart'));
+            charts.rIndex = echarts.init(document.getElementById('rIndexChart'));
             // Init Annual Charts
             charts.calendar = echarts.init(document.getElementById('calendarHeatmap'));
             charts.hourly = echarts.init(document.getElementById('hourlyHeatmap'));
@@ -198,6 +204,79 @@ hidemeta: true
                 }]
             };
             charts.distFreq.setOption(scatterOption);
+            // --- 3. r-index LOGIC ---
+            const maxDist = Math.floor(Math.max(...rawData.map(r => r.distance_km)));
+            let rIndexData = [];
+            // Calculate cumulative counts: runs > i
+            for (let i = 1; i <= maxDist; i++) {
+                const count = rawData.filter(r => r.distance_km > i).length;
+                if (count > 0) {
+                    rIndexData.push([i, count]);
+                }
+            }
+            // Find the r-index value (where count >= i)
+            let rIndex = 0;
+            rIndexData.forEach(([dist, count]) => {
+                if (count >= dist) rIndex = dist;
+            });
+            const rIndexOption = {
+                tooltip: {
+                    trigger: 'axis',
+                    formatter: (params) => {
+                        const p = params[0];
+                        return `Distance > ${p.data[0]} km: <b>${p.data[1]} runs</b>`;
+                    }
+                },
+                grid: { left: '10%', right: '10%', bottom: '15%', top: '10%' },
+                xAxis: { 
+                    type: 'log', 
+                    name: 'Distance (i)', 
+                    nameLocation: 'middle', 
+                    nameGap: 30,
+                    min: 1 
+                },
+                yAxis: { 
+                    type: 'log', 
+                    name: 'Count (Runs > i)', 
+                    min: 1 
+                },
+                series: [
+                    {
+                        name: 'r-index Data',
+                        type: 'scatter',
+                        data: rIndexData,
+                        symbolSize: 10,
+                        itemStyle: { color: '#e65100', opacity: 0.8 }
+                    },
+                    {
+                        name: 'y = x Reference',
+                        type: 'line',
+                        // We draw the line from 1 to at least 20 (as per your Python code)
+                        data: [[1, 1], [Math.max(20, maxDist), Math.max(20, maxDist)]],
+                        symbol: 'none',
+                        lineStyle: { color: 'orange', width: 2, type: 'dashed' },
+                        label: {
+                            show: true,
+                            formatter: 'y = x',
+                            position: 'end'
+                        }
+                    }
+                ],
+                // Add a graphic or markPoint to show the actual r-index
+                graphic: [
+                    {
+                        type: 'text',
+                        left: '15%',
+                        top: '15%',
+                        style: {
+                            text: `Current r-index: ${rIndex}`,
+                            font: 'bold 16px sans-serif',
+                            fill: '#e65100'
+                        }
+                    }
+                ]
+            };
+            charts.rIndex.setOption(rIndexOption);
         }
     }
     function renderAnnual(year) {
