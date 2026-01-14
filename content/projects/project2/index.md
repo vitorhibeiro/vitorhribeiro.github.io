@@ -146,14 +146,13 @@ hidemeta: true
             const lastRecord = sortedData[sortedData.length - 1];
             // Format function (transforms date for better reading)
             const formatDate = (record) => {
-            // 1. Extract the Day: splits at "T" and takes the first part ("19")
-            const day = record.day;
-            const month = record.month_name;
-            const year = record.year;
-            return `${day}, ${month}, ${year}`;
+                const day = record.day;
+                const month = record.month_name;
+                const year = record.year;
+                return `${day}, ${month}, ${year}`;
             };
-            document.getElementById('firstDate').innerText = formatDate(first);
-            document.getElementById('lastDate').innerText = formatDate(last);
+            document.getElementById('firstDate').innerText = formatDate(firstRecord);
+            document.getElementById('lastDate').innerText = formatDate(lastRecord);
             // 2. SCATTERPLOT LOGIC: Frequency vs Distance
             const freqMap = {};
             rawData.forEach(r => {
