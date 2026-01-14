@@ -171,14 +171,14 @@ hidemeta: true
                 },
                 grid: { left: '10%', right: '10%', bottom: '15%', top: '10%' },
                 xAxis: { 
-                    name: 'Activities (Count)', 
+                    name: 'Distance (km)', 
                     nameLocation: 'middle', 
                     nameGap: 30,
                     type: 'value',
                     splitLine: { lineStyle: { type: 'dashed' } }
                 },
                 yAxis: { 
-                    name: 'Distance (km)', 
+                    name: 'Activities (Count)', 
                     type: 'value',
                     splitLine: { lineStyle: { type: 'dashed' } }
                 },
